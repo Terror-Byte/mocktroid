@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 975762348541710701}
   - component: {fileID: 975762348541710703}
   - component: {fileID: 2964320271831520935}
+  - component: {fileID: 1061950270}
   m_Layer: 10
   m_Name: EnemyCrab
   m_TagString: Untagged
@@ -134,10 +135,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68bebd14f1fd293449321350112104eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
-  attackDamage: 10
   deathEffect: {fileID: 8874044582671092537, guid: 65b7efa252427d04a8af6f7df10dce5e,
     type: 3}
+--- !u!58 &1061950270
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 975762348541710694}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.15}
+  serializedVersion: 2
+  m_Radius: 0.8540059
 --- !u!1 &975762349267268774
 GameObject:
   m_ObjectHideFlags: 0

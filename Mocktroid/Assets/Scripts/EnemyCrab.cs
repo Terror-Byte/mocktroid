@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class EnemyCrab : MonoBehaviour
 {
-    public int health = 100;
-    public float attackDamage = 10f;
+    public System.Guid EnemyID { get; private set; } // TODO: PUT IN A ENEMY SUPERCLASS
+    private int health = 100;
+    public float AttackDamage { get; private set; } = 10f;
     public GameObject deathEffect; // prefab for death effect - spawn in place of self
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        EnemyID = System.Guid.NewGuid();
     }
 
     // Update is called once per frame
@@ -48,16 +49,17 @@ public class EnemyCrab : MonoBehaviour
         }
     }*/
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    /*private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.collider.CompareTag("Player"))
         {
             PlayerStats player = collision.collider.GetComponent<PlayerStats>();
-            player.TakeDamage(attackDamage);
+            player.TakeDamage(AttackDamage);
             player.PushBack(gameObject.transform.position);
             // Push player back a bit?
+
         }
-    }
+    }*/
 
     private void OnCollisionStay2D(Collision2D collision)
     {

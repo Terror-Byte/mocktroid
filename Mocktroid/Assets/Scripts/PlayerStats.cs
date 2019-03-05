@@ -15,10 +15,6 @@ public class PlayerStats : MonoBehaviour
     [SerializeField]
     private bool isInvincible = false;
     private float invincibilityTime = 1f;
-    
-    //private float invincibilityTimer = 0f;
-    //private float invincibilityTimerTick = 1f;
-    //private float invincibilityTimerThreshold = 1f;
 
     // Start is called before the first frame update
     void Start()
@@ -30,18 +26,6 @@ public class PlayerStats : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*if (invincibilityTimerOn)
-        {
-            invincibilityTimer += invincibilityTimerTick * Time.deltaTime;
-
-            // StartCoroutine("DamageSpriteFlash");
-
-            if (invincibilityTimer > invincibilityTimerThreshold)
-            {
-                DisableInvincibilityTimer();
-            }
-        }*/
-
         // Check if the player is colliding with any enemies. If so, check if the damage cooldown is active. If so, do nothing. Else, damage the player.
         if (enemiesCollidingWith.Count > 0 && !isInvincible)
         {

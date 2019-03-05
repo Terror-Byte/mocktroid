@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public CharacterController2D controller;
     public Animator animator;
+    public CameraController cameraController;
 
     float horizontalMovement = 0f;
     public float runSpeed = 40f;
@@ -28,6 +29,21 @@ public class PlayerMovement : MonoBehaviour
         {
             jump = true;
             animator.SetBool("IsJumping", true);
+        }
+
+        if (horizontalMovement != 0 && cameraController)
+        {
+            float cameraXOffset = 1.5f;
+            if (horizontalMovement < 0)
+            {
+                // If left
+                cameraController.offset.x = -cameraXOffset;
+            }
+            else if (horizontalMovement > 0)
+            {
+                // If right
+                cameraController.offset.x = cameraXOffset;
+            }
         }
     }
 

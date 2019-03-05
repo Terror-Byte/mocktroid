@@ -12,16 +12,13 @@ public class PlayerStats : MonoBehaviour
     public Renderer playerRenderer;
 
     // Invincibility Timer Stuff
-    private bool invincibilityTimerOn = false;
     [SerializeField]
-    private float invincibilityTimer = 0f;
-    private float invincibilityTimerTick = 1f;
-    private float invincibilityTimerThreshold = 1f;
-
-    // Damage Sprite Flash stuff
-    private float flashTimer = 0f;
-    private float flashTimerThreshold = 0.1f;
-    private float flashTimerTick = 0.1f;
+    private bool isInvincible = false;
+    private float invincibilityTime = 1f;
+    
+    //private float invincibilityTimer = 0f;
+    //private float invincibilityTimerTick = 1f;
+    //private float invincibilityTimerThreshold = 1f;
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +30,7 @@ public class PlayerStats : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (invincibilityTimerOn)
+        /*if (invincibilityTimerOn)
         {
             invincibilityTimer += invincibilityTimerTick * Time.deltaTime;
 
@@ -43,10 +40,10 @@ public class PlayerStats : MonoBehaviour
             {
                 DisableInvincibilityTimer();
             }
-        }
+        }*/
 
         // Check if the player is colliding with any enemies. If so, check if the damage cooldown is active. If so, do nothing. Else, damage the player.
-        if (enemiesCollidingWith.Count > 0 && !invincibilityTimerOn)
+        if (enemiesCollidingWith.Count > 0 && !isInvincible)
         {
             TakeDamage(enemiesCollidingWith[0].AttackDamage);
         }
@@ -77,7 +74,7 @@ public class PlayerStats : MonoBehaviour
             Die();
         }
 
-        EnableInvincibilityTimer();
+        EnableInvincibility();
 
         // TODO: Pushback, flash effect
     }
@@ -112,18 +109,24 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
-    private void EnableInvincibilityTimer()
+    private void EnableInvincibility()
     {
-        invincibilityTimerOn = true;
+        isInvincible = true;
+        StartCoroutine("InvincibilityTimer");
         StartCoroutine("DamageSpriteFlash");
     }
 
-    private void DisableInvincibilityTimer()
+    private void DisableInvincibility()
     {
-        invincibilityTimerOn = false;
-        invincibilityTimer = 0f;
+        isInvincible = false;
         StopCoroutine("DamageSpriteFlash");
         playerRenderer.material.color = Color.white;
+    }
+
+    IEnumerator InvincibilityTimer()
+    {
+        yield return new WaitForSecondsRealtime(invincibilityTime);
+        DisableInvincibility();
     }
 
     IEnumerator DamageSpriteFlash()

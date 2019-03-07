@@ -7,7 +7,7 @@ public class PlayerStats : MonoBehaviour
     public const float MaxHealth = 100f;
     public float Health { get; private set; }
     public int Points { get; private set; } = 0;
-    public List<EnemyCrab> enemiesCollidingWith; // TODO: Replace with generic enemy type
+    public List<Enemy> enemiesCollidingWith; // TODO: Replace with generic enemy type
     public GameObject deathEffect;
     public Renderer playerRenderer;
 
@@ -20,7 +20,7 @@ public class PlayerStats : MonoBehaviour
     void Start()
     {
         Health = MaxHealth;
-        enemiesCollidingWith = new List<EnemyCrab>();
+        enemiesCollidingWith = new List<Enemy>();
     }
 
     // Update is called once per frame
@@ -75,7 +75,7 @@ public class PlayerStats : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        EnemyCrab enemy = collision.gameObject.GetComponent<EnemyCrab>();
+        Enemy enemy = collision.gameObject.GetComponent<Enemy>();
 
         if (enemy && !enemiesCollidingWith.Contains(enemy))
         {
@@ -85,7 +85,7 @@ public class PlayerStats : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        EnemyCrab enemy = collision.gameObject.GetComponent<EnemyCrab>();
+        Enemy enemy = collision.gameObject.GetComponent<Enemy>();
 
         if (enemy && enemiesCollidingWith.Contains(enemy))
         {

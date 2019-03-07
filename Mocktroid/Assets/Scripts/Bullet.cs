@@ -32,7 +32,7 @@ public class Bullet : MonoBehaviour
         if (collision.CompareTag("Pickup"))
             return;
 
-        EnemyCrab enemy = collision.GetComponent<EnemyCrab>();
+        Enemy enemy = collision.GetComponent<Enemy>();
         if (enemy)
         {
             enemy.TakeDamage(25);

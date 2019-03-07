@@ -162,6 +162,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 4144786783112325442}
   animator: {fileID: 1498056558}
+  cameraController: {fileID: 0}
   runSpeed: 40
 --- !u!114 &1319355279
 MonoBehaviour:
@@ -193,8 +194,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemiesCollidingWith: []
-  deathEffect: {fileID: 0}
-  invincibilityTimer: 0
+  deathEffect: {fileID: 8874044582671092537, guid: 65b7efa252427d04a8af6f7df10dce5e,
+    type: 3}
+  playerRenderer: {fileID: 4144786783945187701}
+  isInvincible: 0
 --- !u!1 &4144786783184930276
 GameObject:
   m_ObjectHideFlags: 0

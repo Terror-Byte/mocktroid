@@ -33,8 +33,6 @@ public class Weapon : MonoBehaviour
         else
             firePoint = firePointStill;
 
-        Debug.Log(firePoint.name);
-
         Instantiate(bulletPrefab, firePoint.position, firePointRunning.rotation);
         // StartCoroutine(ShootDelay());
         // animator.SetBool("IsShooting", false);

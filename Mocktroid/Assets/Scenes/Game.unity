@@ -1346,7 +1346,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 239039358}
-  smoothSpeed: 0.125
   offset: {x: 1.5, y: 0, z: -10}
 --- !u!20 &519420031
 Camera:
@@ -1436,6 +1435,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 78524363}
   enemies: []
+  cameraController: {fileID: 519420030}
 --- !u!4 &665187986
 Transform:
   m_ObjectHideFlags: 0

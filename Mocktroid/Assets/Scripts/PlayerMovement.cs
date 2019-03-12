@@ -7,6 +7,10 @@ public class PlayerMovement : MonoBehaviour
     public CharacterController2D controller;
     public Animator animator;
     public CameraController cameraController;
+    private Vector3 cameraOffset;
+    private float cameraXOffset = 1.5f;
+    private float cameraYOffset = 1.5f;
+    private float cameraZOffset = -10f;
 
     float horizontalMovement = 0f;
     public float runSpeed = 40f;
@@ -15,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        cameraOffset = new Vector3(cameraXOffset, 0f, cameraZOffset);
     }
 
     // Update is called once per frame
@@ -33,17 +37,20 @@ public class PlayerMovement : MonoBehaviour
 
         if (horizontalMovement != 0 && cameraController)
         {
-            float cameraXOffset = 1.5f;
             if (horizontalMovement < 0)
             {
                 // If left
-                cameraController.offset.x = -cameraXOffset;
+                cameraOffset.x = -cameraXOffset;
             }
             else if (horizontalMovement > 0)
             {
                 // If right
-                cameraController.offset.x = cameraXOffset;
+                cameraOffset.x = cameraXOffset;
             }
+
+            // If player has control of the camera, set the offset
+            if (cameraController.target == gameObject.transform)
+                cameraController.SetOffset(cameraOffset);
         }
     }
 
@@ -57,5 +64,13 @@ public class PlayerMovement : MonoBehaviour
     {
         animator.SetBool("IsJumping", false);
         // jump = false;
+    }
+
+    public Vector3 CameraOffset
+    {
+        get
+        {
+            return cameraOffset;
+        }
     }
 }

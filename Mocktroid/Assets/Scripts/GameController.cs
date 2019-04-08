@@ -48,6 +48,8 @@ public class GameController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.V) && enemies.Count > 0)
             cameraController.SetTarget(enemies[0].transform);
+
+
     }
 
     private void RemoveEnemyFromList(GameObject enemyObj)

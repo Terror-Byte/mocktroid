@@ -13,4 +13,9 @@ public class CrabAttacking : AIState
     {
         // TODO: Add crab attacking logic
     }
+
+    public override void FixedUpdate()
+    {
+
+    }
 }

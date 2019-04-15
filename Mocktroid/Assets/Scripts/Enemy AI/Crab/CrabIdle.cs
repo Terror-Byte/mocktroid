@@ -13,4 +13,9 @@ public class CrabIdle : AIState
     {
         // TODO: Add crab idle logic
     }
+
+    public override void FixedUpdate()
+    {
+
+    }
 }

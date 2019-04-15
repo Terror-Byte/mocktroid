@@ -5,6 +5,7 @@ using Pathfinding;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Seeker))]
+[RequireComponent(typeof(EnemyCrab))]
 public class CrabAI : MonoBehaviour
 {
     private EnemyCrab enemy;
@@ -33,12 +34,6 @@ public class CrabAI : MonoBehaviour
     void Start()
     {
         enemy = gameObject.GetComponent<EnemyCrab>();
-
-        if (enemy == null)
-        {
-            Debug.LogError("CrabAI - GameObject does not have EnemyCrab script attached.");
-        }
-
 
         // State machine initilisation
         idle = new CrabIdle();
@@ -72,7 +67,7 @@ public class CrabAI : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Put state physics calculations in FixedUpdate functions of their own?
+        // Put state physics calculations in FixedUpdate functions of their own ?
 
         if (target == null)
             return;
@@ -109,7 +104,7 @@ public class CrabAI : MonoBehaviour
 
     private void OnPathComplete(Path p)
     {
-        Debug.Log("Path Error: " + p.error);
+        // Debug.Log("Path Error: " + p.error);
 
         if (!p.error)
         {

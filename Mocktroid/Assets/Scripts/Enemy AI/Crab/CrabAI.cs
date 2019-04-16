@@ -24,11 +24,14 @@ public class CrabAI : MonoBehaviour
     private Seeker seeker;
     private Rigidbody2D rb;
     public Path path;
-    public float speed = 300f; // Move speed
-    public ForceMode2D fMode; // Determines how force is applied to ridigbody (whether force or impulse)
+    public float speed = 40f; // Move speed
+    // public ForceMode2D fMode; // Determines how force is applied to ridigbody (whether force or impulse)
     private bool pathIsEnded = false; // TODO: Make public in future? [HideInInspector]
-    private float nextWaypointDistance = 3; // How close the enemy needs to get to a waypoint for it to consider itself "at" that waypoint
-    private int currentWaypoint = 0; // Waypoint we are current;y moving towards
+    private float nextWaypointDistance = 1; // How close the enemy needs to get to a waypoint for it to consider itself "at" that waypoint
+    public int currentWaypoint = 0; // Waypoint we are current;y moving towards
+
+    public CharacterController2D controller;
+    float horizontalMovement = 0f;
 
     // Start is called before the first frame update
     void Start()
@@ -45,7 +48,7 @@ public class CrabAI : MonoBehaviour
         // Pathfinding initilisation
         seeker = gameObject.GetComponent<Seeker>();
         rb = gameObject.GetComponent<Rigidbody2D>();
-        fMode = ForceMode2D.Force;
+        // fMode = ForceMode2D.Force;
 
         if (target == null)
             Debug.Log("No Target Set");
@@ -60,7 +63,6 @@ public class CrabAI : MonoBehaviour
     void Update()
     {
         state.Update();
-
         // If player is within pursuit threshold - transition to pursuing
         // If player is within attack threshold - transition to attack
     }
@@ -87,11 +89,30 @@ public class CrabAI : MonoBehaviour
         pathIsEnded = false;
 
         // Direction to the next waypoint
-        Vector3 dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
-        dir *= speed * Time.fixedDeltaTime;
+        //Vector3 dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
+        //dir *= speed * Time.fixedDeltaTime;
 
-        // Move to waypoint
-        rb.AddForce(dir, fMode);
+        //// Move to waypoint
+        //rb.AddForce(dir);
+
+        Vector3 dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
+
+        if (dir.x < 0)
+        {
+            // Waypoint is to the left
+            horizontalMovement = -speed;
+        }
+        else if (dir.x > 0)
+        {
+            // Waypoint is to the right
+            horizontalMovement = speed;
+        }
+        else
+        {
+            horizontalMovement = 0;
+        }
+
+        controller.Move(horizontalMovement * Time.fixedDeltaTime, false, false);
 
         // Check if enemy is at the next waypoint
         float dist = Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]);

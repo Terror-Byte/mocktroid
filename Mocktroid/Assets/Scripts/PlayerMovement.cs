@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Movement logic
         horizontalMovement = Input.GetAxisRaw("Horizontal") * runSpeed;
 
         animator.SetFloat("Speed", Mathf.Abs(horizontalMovement));
@@ -35,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("IsJumping", true);
         }
 
+        // Camera Logic
         if (horizontalMovement != 0 && cameraController)
         {
             if (horizontalMovement < 0)

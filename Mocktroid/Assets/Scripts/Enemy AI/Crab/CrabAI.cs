@@ -20,11 +20,11 @@ public class CrabAI : MonoBehaviour
     // Pathfinding
     // TODO: Re-organise code into states if needed
     public Transform target; // Target to pathfind to
-    public float updateRate = 2f; // How often the pathfinder refreshes the path to the player (only use in pursuit mode)
+    public float updateRate = 5f; // How often the pathfinder refreshes the path to the player (only use in pursuit mode)
     private Seeker seeker;
     private Rigidbody2D rb;
     public Path path;
-    public float speed = 40f; // Move speed
+    private float speed = 20f; // Move speed
     // public ForceMode2D fMode; // Determines how force is applied to ridigbody (whether force or impulse)
     private bool pathIsEnded = false; // TODO: Make public in future? [HideInInspector]
     private float nextWaypointDistance = 1; // How close the enemy needs to get to a waypoint for it to consider itself "at" that waypoint
@@ -112,7 +112,11 @@ public class CrabAI : MonoBehaviour
             horizontalMovement = 0;
         }
 
+        Debug.Log(horizontalMovement);
+
         controller.Move(horizontalMovement * Time.fixedDeltaTime, false, false);
+
+        //Move(horizontalMovement * Time.fixedDeltaTime);
 
         // Check if enemy is at the next waypoint
         float dist = Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]);
@@ -148,5 +152,18 @@ public class CrabAI : MonoBehaviour
         yield return new WaitForSeconds(1f / updateRate);
 
         StartCoroutine(UpdatePath());
+    }
+
+    private void Move(float move)
+    {
+        float movementSmoothing = .0f;
+        Vector3 velocity = Vector3.zero;
+
+        Vector3 targetVelocity = new Vector2(move * 10f, rb.velocity.y);
+        // And then smoothing it out and applying it to the character
+        // rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, movementSmoothing);
+        // rb.velocity = targetVelocity;
+
+        transform.position = new Vector3(transform.position.x + move, transform.position.y, transform.position.z);
     }
 }

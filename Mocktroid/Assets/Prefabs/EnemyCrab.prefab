@@ -260,7 +260,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   updateRate: 2
-  speed: 1000
   currentWaypoint: 0
   controller: {fileID: 4747215821753736671}
 --- !u!114 &4747215821753736671
@@ -281,7 +280,7 @@ MonoBehaviour:
   m_AirControl: 0
   m_WhatIsGround:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_GroundCheck: {fileID: 1598809229}
   m_CeilingCheck: {fileID: 1934589395}
   m_CrouchDisableCollider: {fileID: 0}
@@ -320,13 +319,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 975762349267268774}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_Children: []
   m_Father: {fileID: 975762348541710697}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!212 &975762349267268776
 SpriteRenderer:
   m_ObjectHideFlags: 0

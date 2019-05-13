@@ -9,6 +9,16 @@ public class CrabAttacking : AIState
 
     }
 
+    public override void OnEnter()
+    {
+
+    }
+
+    public override void OnExit()
+    {
+
+    }
+
     public override void Update()
     {
         // TODO: Add crab attacking logic

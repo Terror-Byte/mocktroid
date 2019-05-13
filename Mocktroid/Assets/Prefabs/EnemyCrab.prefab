@@ -258,10 +258,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dda70678601aeb4a8a43f63890ac7c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 1521958882}
   target: {fileID: 0}
   updateRate: 2
   currentWaypoint: 0
   controller: {fileID: 4747215821753736671}
+  horizontalMovement: 0
 --- !u!114 &4747215821753736671
 MonoBehaviour:
   m_ObjectHideFlags: 0

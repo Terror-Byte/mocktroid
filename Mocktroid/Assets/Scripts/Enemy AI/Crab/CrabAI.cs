@@ -9,6 +9,7 @@ using Pathfinding;
 public class CrabAI : MonoBehaviour
 {
     private EnemyCrab enemy;
+    public Animator animator;
 
     // State Machine
     private AIState state;
@@ -20,17 +21,18 @@ public class CrabAI : MonoBehaviour
     // Pathfinding
     // TODO: Re-organise code into states if needed
     public Transform target; // Target to pathfind to
-    public float updateRate = 5f; // How often the pathfinder refreshes the path to the player (only use in pursuit mode)
+    public float updateRate = 10f; // How often the pathfinder refreshes the path to the player (only use in pursuit mode)
     private Seeker seeker;
     private Rigidbody2D rb;
     public Path path;
-    private float speed = 20f; // Move speed
+    private float speed = 30f; // Move speed
     // public ForceMode2D fMode; // Determines how force is applied to ridigbody (whether force or impulse)
     private bool pathIsEnded = false; // TODO: Make public in future? [HideInInspector]
     private float nextWaypointDistance = 1; // How close the enemy needs to get to a waypoint for it to consider itself "at" that waypoint
     public int currentWaypoint = 0; // Waypoint we are current;y moving towards
 
     public CharacterController2D controller;
+    [SerializeField]
     float horizontalMovement = 0f;
 
     // Start is called before the first frame update
@@ -44,6 +46,7 @@ public class CrabAI : MonoBehaviour
         attacking = new CrabAttacking();
         postAttack = new CrabPostAttack();
         state = idle;
+        idle.OnEnter();
 
         // Pathfinding initilisation
         seeker = gameObject.GetComponent<Seeker>();
@@ -89,13 +92,35 @@ public class CrabAI : MonoBehaviour
         pathIsEnded = false;
 
         // Direction to the next waypoint
-        //Vector3 dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
+        Vector3 dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
         //dir *= speed * Time.fixedDeltaTime;
 
-        //// Move to waypoint
-        //rb.AddForce(dir);
 
-        Vector3 dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
+
+        if (currentWaypoint == 0)
+        {
+            if (horizontalMovement != 0)
+            {
+                // We're already moving
+
+                Vector3 nextDir = (path.vectorPath[currentWaypoint + 1] - transform.position).normalized;
+
+                // If we are already moving LEFT, current waypoint is to the RIGHT but the next waypoint is LEFT
+                if (horizontalMovement == -speed && dir.x > 0 && nextDir.x < 0)
+                {
+                    currentWaypoint++;
+                    dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
+                }
+                // If we are already moving RIGHT, currently waypoint is to the LEFT but the next waypoint is RIGHT.
+                else if (horizontalMovement == speed && dir.x < 0 && nextDir.x > 0)
+                {
+                    currentWaypoint++;
+                    dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
+                }
+            }
+        }
+
+        Debug.Log(dir);
 
         if (dir.x < 0)
         {
@@ -112,7 +137,7 @@ public class CrabAI : MonoBehaviour
             horizontalMovement = 0;
         }
 
-        Debug.Log(horizontalMovement);
+        animator.SetFloat("Speed", Mathf.Abs(horizontalMovement));
 
         controller.Move(horizontalMovement * Time.fixedDeltaTime, false, false);
 
@@ -130,12 +155,11 @@ public class CrabAI : MonoBehaviour
     private void OnPathComplete(Path p)
     {
         // Debug.Log("Path Error: " + p.error);
+        if (p.error)
+            return;
 
-        if (!p.error)
-        {
-            path = p;
-            currentWaypoint = 0;
-        }
+        path = p;
+        currentWaypoint = 0;
     }
 
     // Every few seconds or so find a new path to target
@@ -154,16 +178,16 @@ public class CrabAI : MonoBehaviour
         StartCoroutine(UpdatePath());
     }
 
-    private void Move(float move)
-    {
-        float movementSmoothing = .0f;
-        Vector3 velocity = Vector3.zero;
+    //private void Move(float move)
+    //{
+    //    float movementSmoothing = .0f;
+    //    Vector3 velocity = Vector3.zero;
 
-        Vector3 targetVelocity = new Vector2(move * 10f, rb.velocity.y);
-        // And then smoothing it out and applying it to the character
-        // rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, movementSmoothing);
-        // rb.velocity = targetVelocity;
+    //    Vector3 targetVelocity = new Vector2(move * 10f, rb.velocity.y);
+    //    // And then smoothing it out and applying it to the character
+    //    // rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, movementSmoothing);
+    //    // rb.velocity = targetVelocity;
 
-        transform.position = new Vector3(transform.position.x + move, transform.position.y, transform.position.z);
-    }
+    //    transform.position = new Vector3(transform.position.x + move, transform.position.y, transform.position.z);
+    //}
 }

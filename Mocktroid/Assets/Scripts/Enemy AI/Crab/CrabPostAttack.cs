@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 
 public class CrabPostAttack : AIState
 {
-    public CrabPostAttack()
-    {
+    private CrabPathfindingInfo pathInfo;
 
+    public CrabPostAttack(CrabPathfindingInfo pathInfo)
+    {
+        this.pathInfo = pathInfo;
     }
 
     public override void OnEnter()

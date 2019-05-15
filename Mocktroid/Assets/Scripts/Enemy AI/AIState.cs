@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class AIState
 {
+
     public abstract void OnEnter();
 
     public abstract void OnExit();
@@ -11,4 +12,6 @@ public abstract class AIState
     public abstract void Update();
 
     public abstract void FixedUpdate();
+
+
 }

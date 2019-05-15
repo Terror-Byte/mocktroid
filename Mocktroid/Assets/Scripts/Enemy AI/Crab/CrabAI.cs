@@ -146,7 +146,6 @@ public class CrabAI : MonoBehaviour
 
     //private void OnPathComplete(Path p)
     //{
-    //    // Debug.Log("Path Error: " + p.error);
     //    if (p.error)
     //        return;
 
@@ -155,31 +154,28 @@ public class CrabAI : MonoBehaviour
     //}
 
     // Every few seconds or so find a new path to target
-    //private IEnumerator UpdatePath()
-    //{
-    //    if (target == null)
-    //    {
-    //        // TODO: Insert player search here (THIS IS JUST A BRACKEYS THING. PROBS WON'T NEED TO WORRY ABOUT THIS)
-    //        yield return false;
-    //    }
+    private IEnumerator UpdatePath()
+    {
+        if (pathInfo.Target == null)
+        {
+            // TODO: Insert player search here (THIS IS JUST A BRACKEYS THING. PROBS WON'T NEED TO WORRY ABOUT THIS)
+            yield return false;
+        }
 
-    //    seeker.StartPath(transform.position, target.position, OnPathComplete);
+        seeker.StartPath(transform.position, pathInfo.Target.position, OnPathComplete);
 
-    //    yield return new WaitForSeconds(1f / updateRate);
+        yield return new WaitForSeconds(1f / pathInfo.UpdateRate);
 
-    //    StartCoroutine(UpdatePath());
-    //}
+        StartCoroutine(UpdatePath());
+    }
 
-    //private void Move(float move)
-    //{
-    //    float movementSmoothing = .0f;
-    //    Vector3 velocity = Vector3.zero;
+    public void StartUpdatePath()
+    {
+        StartCoroutine(UpdatePath());
+    }
 
-    //    Vector3 targetVelocity = new Vector2(move * 10f, rb.velocity.y);
-    //    // And then smoothing it out and applying it to the character
-    //    // rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, movementSmoothing);
-    //    // rb.velocity = targetVelocity;
-
-    //    transform.position = new Vector3(transform.position.x + move, transform.position.y, transform.position.z);
-    //}
+    public void StopUpdatePath()
+    {
+        StopCoroutine(UpdatePath());
+    }
 }

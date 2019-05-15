@@ -5,11 +5,15 @@ using Pathfinding;
 
 public class CrabAttacking : AIState
 {
-    private CrabPathfindingInfo pathInfo;
+    public CrabPathfindingInfo PathInfo { get; private set; }
+    // May not be needed here!
+    private Path path;
+    private bool pathIsEnded = false;
+    private int currentWaypoint = 0; // Waypoint we are currently moving towards
 
     public CrabAttacking(CrabPathfindingInfo pathInfo)
     {
-        this.pathInfo = pathInfo;
+        this.PathInfo = pathInfo;
     }
 
     public override void OnEnter()

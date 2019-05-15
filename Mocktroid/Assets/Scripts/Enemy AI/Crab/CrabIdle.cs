@@ -5,14 +5,18 @@ using Pathfinding;
 
 public class CrabIdle : AIState
 {
-    private CrabPathfindingInfo pathInfo;
+    public CrabPathfindingInfo PathInfo { get; private set; }
     private Transform patrolTargetLeft;
     private Transform patrolTargetRight;
     private bool isPatrollingRight = true;
 
+    private Path path;
+    private bool pathIsEnded = false;
+    private int currentWaypoint = 0; // Waypoint we are currently moving towards
+
     public CrabIdle(CrabPathfindingInfo pathInfo)
     {
-        this.pathInfo = pathInfo;
+        this.PathInfo = pathInfo;
     }
 
     public override void OnEnter()

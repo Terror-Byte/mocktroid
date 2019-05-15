@@ -5,11 +5,14 @@ using Pathfinding;
 
 public class CrabPursuing : AIState
 {
-    private CrabPathfindingInfo pathInfo;
+    public CrabPathfindingInfo PathInfo { get; private set; }
+    private Path path;
+    private bool pathIsEnded = false;
+    private int currentWaypoint = 0; // Waypoint we are currently moving towards
 
     public CrabPursuing(CrabPathfindingInfo pathInfo)
     {
-        this.pathInfo = pathInfo;
+        this.PathInfo = pathInfo;
     }
 
     public override void OnEnter()
@@ -20,6 +23,7 @@ public class CrabPursuing : AIState
     public override void OnExit()
     {
         // Clear PathfindingInfo stuff? CurrentWaypoint, pathhasended, path, etc
+        // Stop UpdatePath coroutine
     }
 
     public override void Update()

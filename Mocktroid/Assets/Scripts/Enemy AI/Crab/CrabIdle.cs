@@ -10,9 +10,9 @@ public class CrabIdle : AIState
     private Transform patrolTargetRight;
     private bool isPatrollingRight = true;
 
-    private Path path;
-    private bool pathIsEnded = false;
-    private int currentWaypoint = 0; // Waypoint we are currently moving towards
+    //private Path path;
+    //private bool pathIsEnded = false;
+    //private int currentWaypoint = 0; // Waypoint we are currently moving towards
 
     public CrabIdle(CrabPathfindingInfo pathInfo)
     {

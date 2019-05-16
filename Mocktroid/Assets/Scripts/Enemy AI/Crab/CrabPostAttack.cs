@@ -7,9 +7,9 @@ public class CrabPostAttack : AIState
 {
     public CrabPathfindingInfo PathInfo { get; private set; }
     // May not be needed here
-    private Path path;
-    private bool pathIsEnded = false;
-    private int currentWaypoint = 0; // Waypoint we are currently moving towards
+    //private Path path;
+    //private bool pathIsEnded = false;
+    //private int currentWaypoint = 0; // Waypoint we are currently moving towards
 
     public CrabPostAttack(CrabPathfindingInfo pathInfo)
     {

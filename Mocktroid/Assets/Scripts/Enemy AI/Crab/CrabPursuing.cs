@@ -6,9 +6,16 @@ using Pathfinding;
 public class CrabPursuing : AIState
 {
     public CrabPathfindingInfo PathInfo { get; private set; }
-    private Path path;
-    private bool pathIsEnded = false;
-    private int currentWaypoint = 0; // Waypoint we are currently moving towards
+
+    private delegate void StartPathDelegate();
+    private delegate void StartUpdatePathDelegate();
+    private delegate void StopUpdatePathDelegate();
+    private StartPathDelegate StartPath;
+    private StartUpdatePathDelegate StartUpdatePath;
+    private StopUpdatePathDelegate StopUpdatePath;
+    //private Path path;
+    //private bool pathIsEnded = false;
+    //private int currentWaypoint = 0; // Waypoint we are currently moving towards
 
     public CrabPursuing(CrabPathfindingInfo pathInfo)
     {
@@ -18,6 +25,10 @@ public class CrabPursuing : AIState
     public override void OnEnter()
     {
         // Begin pathfinding to player
+        // PathInfo.Seeker.StartPath(PathInfo.Rb.transform.position, PathInfo.Target.position, OnPathComplete);
+        // StartCoroutine(UpdatePath());
+
+        // Set target to the player
     }
 
     public override void OnExit()
@@ -105,30 +116,4 @@ public class CrabPursuing : AIState
         //    return;
         //}
     }
-
-    //private void OnPathComplete(Path p)
-    //{
-    //    // Debug.Log("Path Error: " + p.error);
-    //    if (p.error)
-    //        return;
-
-    //    path = p;
-    //    currentWaypoint = 0;
-    //}
-
-    // Every few seconds or so find a new path to target
-    //private IEnumerator UpdatePath()
-    //{
-    //    if (target == null)
-    //    {
-    //        // TODO: Insert player search here (THIS IS JUST A BRACKEYS THING. PROBS WON'T NEED TO WORRY ABOUT THIS)
-    //        yield return false;
-    //    }
-
-    //    pathInfo.Seeker.StartPath(pathInfo.Rb.transform.position, target.position, OnPathComplete);
-
-    //    yield return new WaitForSeconds(1f / pathInfo.UpdateRate);
-
-    //    StartCoroutine(UpdatePath());
-    //}
 }

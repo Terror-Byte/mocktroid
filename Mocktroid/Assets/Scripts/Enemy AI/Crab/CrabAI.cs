@@ -144,14 +144,14 @@ public class CrabAI : MonoBehaviour
         //}
     }
 
-    //private void OnPathComplete(Path p)
-    //{
-    //    if (p.error)
-    //        return;
+    private void OnPathComplete(Path p)
+    {
+        if (p.error)
+            return;
 
-    //    path = p;
-    //    currentWaypoint = 0;
-    //}
+        state.Path = p;
+        state.CurrentWaypoint = 0;
+    }
 
     // Every few seconds or so find a new path to target
     private IEnumerator UpdatePath()

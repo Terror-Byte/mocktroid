@@ -10,6 +10,7 @@ public class CrabAI : MonoBehaviour
 {
     private EnemyCrab enemy;
     public Animator animator;
+    public GameObject player;
 
     // State Machine
     private AIState state;
@@ -47,9 +48,15 @@ public class CrabAI : MonoBehaviour
 
         // State machine initilisation
         idle = new CrabIdle(pathInfo);
-        pursuing = new CrabPursuing(pathInfo);
+
+        pursuing = new CrabPursuing(pathInfo, player);
+        pursuing.InitialiseStartUpdatePath(StartUpdatePath);
+        pursuing.InitialiseStopUpdatePath(StopUpdatePath);
+
         attacking = new CrabAttacking(pathInfo);
+
         postAttack = new CrabPostAttack(pathInfo);
+
         state = idle;
         idle.OnEnter();
 
@@ -159,6 +166,7 @@ public class CrabAI : MonoBehaviour
         if (pathInfo.Target == null)
         {
             // TODO: Insert player search here (THIS IS JUST A BRACKEYS THING. PROBS WON'T NEED TO WORRY ABOUT THIS)
+            Debug.LogError("CrabAI::UpdatePath - There is no Target to pathfind to.");
             yield return false;
         }
 

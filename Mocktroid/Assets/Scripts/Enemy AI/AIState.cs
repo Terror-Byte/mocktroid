@@ -6,7 +6,7 @@ using Pathfinding;
 public abstract class AIState
 {
     public Path Path { get; set; }
-    private bool pathIsEnded = false;
+    protected bool pathIsEnded = false;
     private int currentWaypoint = 0; // Waypoint we are currently moving towards
 
     public abstract void OnEnter();

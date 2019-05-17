@@ -6,20 +6,40 @@ using Pathfinding;
 public class CrabPursuing : AIState
 {
     public CrabPathfindingInfo PathInfo { get; private set; }
+    private GameObject player;
 
-    private delegate void StartPathDelegate();
-    private delegate void StartUpdatePathDelegate();
-    private delegate void StopUpdatePathDelegate();
-    private StartPathDelegate StartPath;
-    private StartUpdatePathDelegate StartUpdatePath;
-    private StopUpdatePathDelegate StopUpdatePath;
+    //private delegate void StartPathDelegate();
+    //private delegate void StartUpdatePathDelegate();
+    //private delegate void StopUpdatePathDelegate();
+    //private StartPathDelegate StartPath;
+    //private StartUpdatePathDelegate StartUpdatePath;
+    //private StopUpdatePathDelegate StopUpdatePath;
     //private Path path;
     //private bool pathIsEnded = false;
     //private int currentWaypoint = 0; // Waypoint we are currently moving towards
 
+    System.Action StartUpdatePath;
+    System.Action StopUpdatePath;
+
     public CrabPursuing(CrabPathfindingInfo pathInfo)
     {
         this.PathInfo = pathInfo;
+    }
+
+    public CrabPursuing(CrabPathfindingInfo pathInfo, GameObject player)
+    {
+        this.PathInfo = PathInfo;
+        this.player = player;
+    }
+
+    public void InitialiseStartUpdatePath(System.Action func)
+    {
+        StartUpdatePath = func;
+    }
+
+    public void InitialiseStopUpdatePath(System.Action func)
+    {
+        StopUpdatePath = func;
     }
 
     public override void OnEnter()
@@ -29,12 +49,29 @@ public class CrabPursuing : AIState
         // StartCoroutine(UpdatePath());
 
         // Set target to the player
+        PathInfo.Target = player.transform;
+        if (StartUpdatePath == null)
+        {
+            Debug.LogError("CrabPursuing::OnEnter - StartUpdatePath delegate has not been assigned a function.");
+            return;
+        }
+        StartUpdatePath();
     }
 
     public override void OnExit()
     {
         // Clear PathfindingInfo stuff? CurrentWaypoint, pathhasended, path, etc
         // Stop UpdatePath coroutine
+        Path = null;
+        CurrentWaypoint = 0;
+        pathIsEnded = false;
+
+        if (StopUpdatePath == null)
+        {
+            Debug.LogError("CrabPursuin::OnExit - StopUpdatePath delegate has not been assigned a function.");
+            return;
+        }
+        StopUpdatePath();
     }
 
     public override void Update()
@@ -44,76 +81,78 @@ public class CrabPursuing : AIState
 
     public override void FixedUpdate()
     {
-        //if (target == null)
-        //    return;
+        if (PathInfo.Target == null)
+            return;
 
-        //if (path == null)
-        //    return;
+        if (Path == null)
+            return;
 
-        //if (currentWaypoint >= path.vectorPath.Count)
-        //{
-        //    if (pathIsEnded)
-        //        return;
+        if (CurrentWaypoint >= Path.vectorPath.Count)
+        {
+            if (pathIsEnded)
+                return;
 
-        //    Debug.Log("End of path reached");
-        //    pathIsEnded = true;
-        //    return;
-        //}
-        //pathIsEnded = false;
+            Debug.Log("End of path reached");
+            pathIsEnded = true;
+            return;
+        }
+        pathIsEnded = false;
 
-        //// Direction to the next waypoint
-        //Vector3 dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
+        Transform transform = PathInfo.Rb.transform;
 
-        //if (currentWaypoint == 0)
-        //{
-        //    if (horizontalMovement != 0)
-        //    {
-        //        // We're already moving
+        // Direction to the next waypoint
+        Vector3 dir = (Path.vectorPath[CurrentWaypoint] - transform.position).normalized;
 
-        //        Vector3 nextDir = (path.vectorPath[currentWaypoint + 1] - transform.position).normalized;
+        if (CurrentWaypoint == 0)
+        {
+            if (PathInfo.HorizontalMovement != 0)
+            {
+                // We're already moving
 
-        //        // If we are already moving LEFT, current waypoint is to the RIGHT but the next waypoint is LEFT
-        //        if (horizontalMovement == -speed && dir.x > 0 && nextDir.x < 0)
-        //        {
-        //            currentWaypoint++;
-        //            dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
-        //        }
-        //        // If we are already moving RIGHT, currently waypoint is to the LEFT but the next waypoint is RIGHT.
-        //        else if (horizontalMovement == speed && dir.x < 0 && nextDir.x > 0)
-        //        {
-        //            currentWaypoint++;
-        //            dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
-        //        }
-        //    }
-        //}
+                Vector3 nextDir = (Path.vectorPath[CurrentWaypoint + 1] - transform.position).normalized;
 
-        //Debug.Log(dir);
+                // If we are already moving LEFT, current waypoint is to the RIGHT but the next waypoint is LEFT
+                if (PathInfo.HorizontalMovement == -PathInfo.Speed && dir.x > 0 && nextDir.x < 0)
+                {
+                    CurrentWaypoint++;
+                    dir = (Path.vectorPath[CurrentWaypoint] - transform.position).normalized;
+                }
+                // If we are already moving RIGHT, currently waypoint is to the LEFT but the next waypoint is RIGHT.
+                else if (PathInfo.HorizontalMovement == PathInfo.Speed && dir.x < 0 && nextDir.x > 0)
+                {
+                    CurrentWaypoint++;
+                    dir = (Path.vectorPath[CurrentWaypoint] - transform.position).normalized;
+                }
+            }
+        }
 
-        //if (dir.x < 0)
-        //{
-        //    // Waypoint is to the left
-        //    horizontalMovement = -speed;
-        //}
-        //else if (dir.x > 0)
-        //{
-        //    // Waypoint is to the right
-        //    horizontalMovement = speed;
-        //}
-        //else
-        //{
-        //    horizontalMovement = 0;
-        //}
+        Debug.Log(dir);
 
-        //animator.SetFloat("Speed", Mathf.Abs(horizontalMovement));
+        if (dir.x < 0)
+        {
+            // Waypoint is to the left
+            PathInfo.HorizontalMovement = -PathInfo.Speed;
+        }
+        else if (dir.x > 0)
+        {
+            // Waypoint is to the right
+            PathInfo.HorizontalMovement = PathInfo.Speed;
+        }
+        else
+        {
+            PathInfo.HorizontalMovement = 0;
+        }
 
-        //controller.Move(horizontalMovement * Time.fixedDeltaTime, false, false);
+        PathInfo.Animator.SetFloat("Speed", Mathf.Abs(PathInfo.HorizontalMovement));
 
-        //// Check if enemy is at the next waypoint
-        //float dist = Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]);
-        //if (dist <= nextWaypointDistance)
-        //{
-        //    currentWaypoint++;
-        //    return;
-        //}
+        PathInfo.Controller.Move(PathInfo.HorizontalMovement * Time.fixedDeltaTime, false, false);
+
+        // Check if enemy is at the next waypoint
+        float dist = Vector3.Distance(transform.position, Path.vectorPath[CurrentWaypoint]);
+        if (dist <= PathInfo.NextWaypointDistance)
+        {
+            CurrentWaypoint++;
+            return;
+        }
     }
 }

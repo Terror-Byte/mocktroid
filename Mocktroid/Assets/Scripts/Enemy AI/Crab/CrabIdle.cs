@@ -26,7 +26,9 @@ public class CrabIdle : AIState
 
     public override void OnExit()
     {
-        
+        Path = null;
+        CurrentWaypoint = 0;
+        pathIsEnded = false;
     }
 
     public override void Update()

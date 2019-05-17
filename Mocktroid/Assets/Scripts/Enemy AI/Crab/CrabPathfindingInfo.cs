@@ -16,7 +16,7 @@ public class CrabPathfindingInfo
     // public bool pathIsEnded = false; // TODO: Make public in future? [HideInInspector]
     public float NextWaypointDistance { get; private set; } = 1; // How close the enemy needs to get to a waypoint for it to consider itself "at" that waypoint
     // public int currentWaypoint = 0; // Waypoint we are currently moving towards
-    public float HorizontalMovement { get; private set; } = 0f;
+    public float HorizontalMovement { get; set; } = 0f;
 
     public CrabPathfindingInfo(CharacterController2D controller, Animator animator, Seeker seeker, Rigidbody2D rb)
     {

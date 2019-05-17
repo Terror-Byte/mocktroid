@@ -259,11 +259,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1521958882}
-  target: {fileID: 0}
-  updateRate: 2
-  currentWaypoint: 0
+  player: {fileID: 0}
   controller: {fileID: 4747215821753736671}
-  horizontalMovement: 0
 --- !u!114 &4747215821753736671
 MonoBehaviour:
   m_ObjectHideFlags: 0

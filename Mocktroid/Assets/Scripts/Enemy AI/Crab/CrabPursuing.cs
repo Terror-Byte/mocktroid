@@ -18,8 +18,8 @@ public class CrabPursuing : AIState
     //private bool pathIsEnded = false;
     //private int currentWaypoint = 0; // Waypoint we are currently moving towards
 
-    System.Action StartUpdatePath;
-    System.Action StopUpdatePath;
+    //System.Action StartUpdatePath;
+    //System.Action StopUpdatePath;
 
     public CrabPursuing(CrabPathfindingInfo pathInfo)
     {
@@ -28,19 +28,19 @@ public class CrabPursuing : AIState
 
     public CrabPursuing(CrabPathfindingInfo pathInfo, GameObject player)
     {
-        this.PathInfo = PathInfo;
+        this.PathInfo = pathInfo;
         this.player = player;
     }
 
-    public void InitialiseStartUpdatePath(System.Action func)
-    {
-        StartUpdatePath = func;
-    }
+    //public void InitialiseStartUpdatePath(System.Action func)
+    //{
+    //    StartUpdatePath = func;
+    //}
 
-    public void InitialiseStopUpdatePath(System.Action func)
-    {
-        StopUpdatePath = func;
-    }
+    //public void InitialiseStopUpdatePath(System.Action func)
+    //{
+    //    StopUpdatePath = func;
+    //}
 
     public override void OnEnter()
     {
@@ -125,8 +125,6 @@ public class CrabPursuing : AIState
                 }
             }
         }
-
-        Debug.Log(dir);
 
         if (dir.x < 0)
         {

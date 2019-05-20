@@ -32,8 +32,9 @@ public class CrabAI : MonoBehaviour
     //private float nextWaypointDistance = 1; // How close the enemy needs to get to a waypoint for it to consider itself "at" that waypoint
     //public int currentWaypoint = 0; // Waypoint we are currently moving towards
     //float horizontalMovement = 0f;
-
     public CharacterController2D controller;
+    public Transform PatrolTargetLeft;
+    public Transform PatrolTargetRight;
     
 
     // Start is called before the first frame update
@@ -48,6 +49,8 @@ public class CrabAI : MonoBehaviour
 
         // State machine initilisation
         idle = new CrabIdle(pathInfo);
+        idle.InitialiseStartUpdatePath(StartUpdatePath);
+        idle.InitialiseStopUpdatePath(StopUpdatePath);
 
         pursuing = new CrabPursuing(pathInfo, player);
         pursuing.InitialiseStartUpdatePath(StartUpdatePath);
@@ -58,7 +61,7 @@ public class CrabAI : MonoBehaviour
         postAttack = new CrabPostAttack(pathInfo);
 
         state = idle;
-        idle.OnEnter();
+        state.OnEnter();
 
         // Start a new path to the target position and return the result to the OnPathComplete function
         // seeker.StartPath(transform.position, target.position, OnPathComplete);

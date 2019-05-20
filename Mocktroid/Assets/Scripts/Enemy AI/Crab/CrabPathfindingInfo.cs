@@ -8,7 +8,7 @@ public class CrabPathfindingInfo
     public CharacterController2D Controller { get; private set; }
     public Animator Animator { get; private set; }
     public Transform Target; // Target to pathfind to
-    public float UpdateRate { get; private set; } = 10f; // How often the pathfinder refreshes the path to the player (only use in pursuit mode)
+    public float UpdateRate { get; private set; } = 5f; // How often the pathfinder refreshes the path to the player (only use in pursuit mode)
     public Seeker Seeker { get; private set; }
     public Rigidbody2D Rb { get; private set; }
     // public Path path;

@@ -10,9 +10,16 @@ public class CrabIdle : AIState
     private Transform patrolTargetRight;
     private bool isPatrollingRight = true;
 
+    private bool isWaiting = true;
+    private float minThreshold = 0.5f;
+    private float maxThreshold = 3f;
+    private float waitThreshold;
+    private float waitTime = 0f; 
+
     public CrabIdle(CrabPathfindingInfo pathInfo)
     {
         this.pathInfo = pathInfo;
+        waitThreshold = Random.Range(minThreshold, maxThreshold);
     }
 
     public CrabIdle(CrabPathfindingInfo pathInfo, Transform patrolTargetLeft, Transform patrolTargetRight)
@@ -20,14 +27,14 @@ public class CrabIdle : AIState
         this.pathInfo = pathInfo;
         this.patrolTargetLeft = patrolTargetLeft;
         this.patrolTargetRight = patrolTargetRight;
+        waitThreshold = Random.Range(minThreshold, maxThreshold);
     }
 
     public override void OnEnter()
     {
         Debug.Log("Entering Idle State.");
 
-        // Begin pathfinding to right(?) node
-        // TODO: Maybe wait for a second or so so the transition isn't so jarring?
+        // Begin pathfinding to right node
         pathInfo.Target = patrolTargetRight;
         if (StartUpdatePath == null)
         {
@@ -73,6 +80,22 @@ public class CrabIdle : AIState
         if (Path == null)
             return;
 
+        if (isWaiting)
+        {
+            waitTime += Time.fixedDeltaTime;
+
+            if (waitTime > waitThreshold)
+            {
+                isWaiting = false;
+                waitTime = 0;
+            }
+            else
+            {
+                pathInfo.Animator.SetFloat("Speed", 0);
+                return;
+            }
+        }
+
         if (CurrentWaypoint >= Path.vectorPath.Count)
         {
             if (pathIsEnded)
@@ -86,6 +109,10 @@ public class CrabIdle : AIState
                 pathInfo.Target = patrolTargetRight;
             else if (pathInfo.Target == patrolTargetRight)
                 pathInfo.Target = patrolTargetLeft;
+
+            // Wait for a random amount of time.
+            isWaiting = true;
+            waitThreshold = Random.Range(minThreshold, maxThreshold);
 
             return;
         }

@@ -260,7 +260,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 1521958882}
   player: {fileID: 0}
+  playerPursuitThreshold: 5
+  playerAttackThreshold: 2
   controller: {fileID: 4747215821753736671}
+  PatrolTargetLeft: {fileID: 0}
+  PatrolTargetRight: {fileID: 0}
 --- !u!114 &4747215821753736671
 MonoBehaviour:
   m_ObjectHideFlags: 0

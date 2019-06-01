@@ -10,6 +10,7 @@ public abstract class AIState
     private int currentWaypoint = 0; // Waypoint we are currently moving towards
     protected System.Action StartUpdatePath;
     protected System.Action StopUpdatePath;
+    protected System.Action<string> TransitionTo;
 
     public abstract void OnEnter();
 
@@ -27,6 +28,11 @@ public abstract class AIState
     public void InitialiseStopUpdatePath(System.Action func)
     {
         StopUpdatePath = func;
+    }
+
+    public void InitialiseTransitionTo(System.Action<string> func)
+    {
+        TransitionTo = func;
     }
 
     public int CurrentWaypoint

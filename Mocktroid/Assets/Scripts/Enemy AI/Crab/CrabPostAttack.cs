@@ -18,12 +18,12 @@ public class CrabPostAttack : AIState
 
     public override void OnEnter()
     {
-
+        Debug.Log("Entering Post Attack State.");
     }
 
     public override void OnExit()
     {
-
+        Debug.Log("Exiting Post Attacking State.");
     }
 
     public override void Update()

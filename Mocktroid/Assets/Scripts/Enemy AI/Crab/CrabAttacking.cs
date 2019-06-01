@@ -18,12 +18,12 @@ public class CrabAttacking : AIState
 
     public override void OnEnter()
     {
-
+        Debug.Log("Entering Attacking State.");
     }
 
     public override void OnExit()
     {
-
+        Debug.Log("Exiting Attacking State.");
     }
 
     public override void Update()

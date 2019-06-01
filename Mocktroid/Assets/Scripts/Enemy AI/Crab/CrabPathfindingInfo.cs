@@ -17,12 +17,18 @@ public class CrabPathfindingInfo
     public float NextWaypointDistance { get; private set; } = 1; // How close the enemy needs to get to a waypoint for it to consider itself "at" that waypoint
     // public int currentWaypoint = 0; // Waypoint we are currently moving towards
     public float HorizontalMovement { get; set; } = 0f;
+    public float PlayerPursuitThreshold { get; set; }
+    public float PlayerAttackThreshold { get; set; }
+    public GameObject Player { get; private set; }
 
-    public CrabPathfindingInfo(CharacterController2D controller, Animator animator, Seeker seeker, Rigidbody2D rb)
+    public CrabPathfindingInfo(CharacterController2D controller, Animator animator, Seeker seeker, Rigidbody2D rb, float playerPursuitThreshold, float playerAttackThreshold, GameObject player)
     {
         Controller = controller;
         Animator = animator;
         Seeker = seeker;
         Rb = rb;
+        PlayerPursuitThreshold = playerPursuitThreshold;
+        PlayerAttackThreshold = playerAttackThreshold;
+        Player = player;
     }
 }

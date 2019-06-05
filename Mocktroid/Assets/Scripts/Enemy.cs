@@ -33,6 +33,7 @@ public class Enemy : MonoBehaviour
             Instantiate(deathEffect, transform.position, Quaternion.identity);
         }
 
+        AudioManager.instance.Play("EnemyExplosion");
         
         removeFromGameControllerList(gameObject);
 

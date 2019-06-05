@@ -17,7 +17,6 @@ public class Weapon : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             // TODO: Shooting cooldown so player can't spam
-            //animator.SetBool("IsShooting", true);
             animator.SetTrigger("IsShooting");
             Shoot();
         }
@@ -34,6 +33,7 @@ public class Weapon : MonoBehaviour
             firePoint = firePointStill;
 
         Instantiate(bulletPrefab, firePoint.position, firePointRunning.rotation);
+        AudioManager.instance.Play("PlayerShot");
         // StartCoroutine(ShootDelay());
         // animator.SetBool("IsShooting", false);
     }

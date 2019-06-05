@@ -192,10 +192,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
-  - name: 
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
+  - name: PlayerShot
+    clip: {fileID: 8300000, guid: e3c5f23592d9cd04ea3c77b1005b5a8d, type: 3}
+    volume: 0.2
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: EnemyExplosion
+    clip: {fileID: 8300000, guid: 3a55791f58c98cb44af3b31464064640, type: 3}
+    volume: 0.05
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
 --- !u!4 &247442523
 Transform:
   m_ObjectHideFlags: 0

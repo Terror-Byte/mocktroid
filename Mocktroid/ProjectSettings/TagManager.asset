@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Pickup
   - Enemy
+  - Door
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Enemies
   - Effects
   - Pickups
-  - 
+  - Doors
   - 
   - 
   - 

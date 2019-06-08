@@ -30,12 +30,32 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Pickup"))
-            return;
-
-        Enemy enemy = collision.GetComponent<Enemy>();
-        if (enemy)
         {
-            enemy.TakeDamage(25);
+            return;
+        }
+        else if (collision.CompareTag("Door"))
+        {
+            Door door = collision.GetComponent<Door>();
+            if (door)
+            {
+                door.Open();
+            }
+            else
+            {
+                Debug.LogError("Door script not found.");
+            }
+        }
+        else if (collision.CompareTag("Enemy"))
+        {
+            Enemy enemy = collision.GetComponent<Enemy>();
+            if (enemy)
+            {
+                enemy.TakeDamage(25);
+            }
+            else
+            {
+                Debug.LogError("Enemy script not found.");
+            }
         }
 
         if (impactEffect)

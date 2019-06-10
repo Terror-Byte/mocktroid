@@ -82,15 +82,15 @@ public class PlayerStats : MonoBehaviour
             enemiesCollidingWith.Add(enemy);
         }
 
-        //if (collision.CompareTag("Door"))
-        //{
-        //    // Player is within the door collider
-        //    Door door = collision.gameObject.GetComponent<Door>();
-        //    if (door)
-        //        door.OnPlayerEnter();
-        //    else
-        //        Debug.LogError("No door component found.");
-        //}
+        if (collision.CompareTag("Door"))
+        {
+            // Player is within the door collider
+            Door door = collision.gameObject.GetComponent<Door>();
+            if (door)
+                door.OnPlayerEnter();
+            else
+                Debug.LogError("No door component found.");
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -102,15 +102,15 @@ public class PlayerStats : MonoBehaviour
             enemiesCollidingWith.Remove(enemy);
         }
 
-        //if (collision.CompareTag("Door"))
-        //{
-        //    // Player has exited the door collider
-        //    Door door = collision.gameObject.GetComponent<Door>();
-        //    if (door)
-        //        door.OnPlayerExit();
-        //    else
-        //        Debug.LogError("No door component found.");
-        //}
+        if (collision.CompareTag("Door"))
+        {
+            // Player has exited the door collider
+            Door door = collision.gameObject.GetComponent<Door>();
+            if (door)
+                door.OnPlayerExit();
+            else
+                Debug.LogError("No door component found.");
+        }
     }
 
     private void EnableInvincibility()

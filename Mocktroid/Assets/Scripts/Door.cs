@@ -19,7 +19,7 @@ public class Door : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // TODO: If player is within the door, do not allow it to try and close. Add a second end or allow pairing of two doors to act as one.
+        // TODO: Add a second end or allow pairing of two doors to act as one.
     }
 
     public void Open()
@@ -31,6 +31,7 @@ public class Door : MonoBehaviour
         doorCollider.enabled = false;
         animator.SetTrigger("Open");
         StartCoroutine("OpenTimer");
+        // AudioManager.instance.Play("DoorOpen");
         Debug.Log("Door Opening");
     }
 
@@ -39,6 +40,7 @@ public class Door : MonoBehaviour
         isOpen = false;
         doorCollider.enabled = true;
         animator.SetTrigger("Close");
+        // AudioManager.instance.Play("DoorClose");
         Debug.Log("Door Closing");
     }
 

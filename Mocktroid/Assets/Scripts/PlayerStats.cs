@@ -91,6 +91,19 @@ public class PlayerStats : MonoBehaviour
             else
                 Debug.LogError("No door component found.");
         }
+        else if (collision.CompareTag("Story Trigger"))
+        {
+            StoryTrigger storyTrigger = collision.GetComponent<StoryTrigger>();
+
+            if (storyTrigger == null)
+            {
+                Debug.LogError("Story Trigger component not present.");
+            }
+            else
+            {
+                storyTrigger.OnPlayerEnter();
+            }
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
